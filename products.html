@@ -70,8 +70,8 @@
                                     <div v-if="Array.isArray(temp.imagesUrl)">
                                         <!-- 跑迴圈，如果有圖片的話顯示出來，key 值後面加上數字避免重複-->
                                         <template v-for="(img, key) in temp.imagesUrl" :key="key + '834'">
-                                            <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="img.imagesUrl">
-                                            <img class="img-fluid" :src="img.imagesUrl" alt="img.title">
+                                            <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="img.imagesUrl[key]">
+                                            <img class="img-fluid" :src="img.imagesUrl[key]" alt="img.title">
                                         </template>
                                     </div>
                                 </div>

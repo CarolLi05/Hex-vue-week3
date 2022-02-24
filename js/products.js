@@ -39,6 +39,7 @@ createApp({
                 this.products = res.data.products;
             }).catch(err=>{
                 // 錯誤跳出通知
+                console.dir(err);
                 alert(err.data.message);
             })
         },
