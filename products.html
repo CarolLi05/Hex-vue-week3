@@ -73,16 +73,16 @@
                                             <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="temp.imagesUrl[key]">
                                             <img class="img-fluid" :src="temp.imagesUrl[key]" alt="img.title">
                                         </template>
+                                        <!-- 以 length 做判斷，如果一個都沒有的話(length 是 0)，出現新增的按鈕，否則就出現刪除最後一個的按鈕-->
+                                        <div v-if="!temp.imagesUrl.length || temp.imagesUrl[temp.imagesUrl.length - 1]">
+                                            <!-- 點擊後，以字串形式，新增到 temp.imagesUrl -->
+                                            <button type="button" class="btn btn-outline-primary d-block w-100" @click="temp.imagesUrl.push('')">新增圖片</button>
+                                        </div>
+                                        <div v-else>
+                                            <!-- 點擊後刪除最後一張圖片 -->
+                                            <button type="button" class="btn btn-outline-danger d-block w-100" @click="temp.imagesUrl.pop()">刪除最後一張圖片</button>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- 以 length 做判斷，如果一個都沒有的話(length 是 0)，出現新增的按鈕，否則就出現刪除最後一個的按鈕-->
-                                <div v-if="!temp.imagesUrl.length || temp.imagesUrl[temp.imagesUrl.length - 1]">
-                                    <!-- 點擊後，以字串形式，新增到 temp.imagesUrl -->
-                                    <button type="button" class="btn btn-outline-primary d-block w-100" @click="temp.imagesUrl.push('')">新增圖片</button>
-                                </div>
-                                <div v-else>
-                                    <!-- 點擊後刪除最後一張圖片 -->
-                                    <button type="button" class="btn btn-outline-danger d-block w-100" @click="temp.imagesUrl.pop()">刪除最後一張圖片</button>
                                 </div>
                             </div>
                             <div class="col-sm-8">
