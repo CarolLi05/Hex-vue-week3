@@ -11,7 +11,7 @@
     <div id="app">
         <div class="container">
             <div class="text-end mt-4">
-                <button type="button" class="btn btn-primary" @click="openModal()">建立新的產品</button>
+                <button type="button" class="btn btn-primary" @click="openModal('isNew')">建立新的產品</button>
             </div>
             <table class="table mt-4">
                 <thead>
@@ -36,8 +36,8 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-outline-primary btn-sm">編輯</button>
-                                <button type="button" class="btn btn-outline-danger btn-sm">刪除</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm" @click="openModal('edit', item)">編輯</button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" @click="openModal('delete', item)">刪除</button>
                             </div>
                         </td>
                     </tr>
@@ -70,8 +70,8 @@
                                     <div v-if="Array.isArray(temp.imagesUrl)">
                                         <!-- 跑迴圈，如果有圖片的話顯示出來，key 值後面加上數字避免重複-->
                                         <template v-for="(img, key) in temp.imagesUrl" :key="key + '834'">
-                                            <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="img.imagesUrl[key]">
-                                            <img class="img-fluid" :src="img.imagesUrl[key]" alt="img.title">
+                                            <input type="text" class="form-control" placeholder="請輸入圖片連結" v-model="temp.imagesUrl[key]">
+                                            <img class="img-fluid" :src="temp.imagesUrl[key]" alt="img.title">
                                         </template>
                                     </div>
                                 </div>
@@ -97,17 +97,17 @@
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="price" class="form-label">單位</label>
-                                        <input id="unit" type="text" class="form-control" placeholder="請輸入單位" v-model="unit">
+                                        <input id="unit" type="text" class="form-control" placeholder="請輸入單位" v-model="temp.unit">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
                                         <label for="origin_price" class="form-label">原價</label>
-                                        <input id="origin_price" type="number" min="0" class="form-control" placeholder="請輸入原價" v-model.number="origin_price">
+                                        <input id="origin_price" type="number" min="0" class="form-control" placeholder="請輸入原價" v-model.number="temp.origin_price">
                                     </div>
                                     <div class="mb-3 col-md-6">
                                         <label for="price" class="form-label">售價</label>
-                                        <input id="price" type="number" min="0" class="form-control" placeholder="請輸入售價" v-model.number="price">
+                                        <input id="price" type="number" min="0" class="form-control" placeholder="請輸入售價" v-model.number="temp.price">
                                     </div>
                                 </div>
 
@@ -115,17 +115,17 @@
 
                                 <div class="mb-3">
                                     <label for="description" class="form-label">產品描述</label>
-                                    <textarea id="description" type="text" class="form-control" placeholder="請輸入產品描述" v-model="description">
+                                    <textarea id="description" type="text" class="form-control" placeholder="請輸入產品描述" v-model="temp.description">
                                     </textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="content" class="form-label">說明內容</label>
-                                    <textarea id="description" type="text" class="form-control" placeholder="請輸入說明內容" v-model="content">
+                                    <textarea id="description" type="text" class="form-control" placeholder="請輸入說明內容" v-model="temp.content">
                                     </textarea>
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-check">
-                                        <input id="is_enabled" class="form-check-input" type="checkbox" :true-value="1" :false-value="0">
+                                        <input id="is_enabled" class="form-check-input" type="checkbox" :true-value="1" :false-value="0" v-model="temp.is_enabled">
                                         <label class="form-check-label" for="is_enabled">是否啟用</label>
                                     </div>
                                 </div>
@@ -134,7 +134,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">確認</button>
+                        <button type="button" class="btn btn-primary" @click="updateProduct">確認</button>
                     </div>
                 </div>
             </div>
@@ -150,11 +150,11 @@
                     </div>
                     <div class="modal-body">
                         是否刪除
-                        <strong class="text-danger"></strong> 商品(刪除後將無法恢復)。
+                        <strong class="text-danger">{{ temp.title }}</strong> 商品(刪除後將無法恢復)。
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-danger">確認刪除</button>
+                        <button type="button" class="btn btn-danger" @click="delProduct">確認刪除</button>
                     </div>
                 </div>
             </div>
